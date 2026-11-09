@@ -1,151 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khmer Load 24 Clone</title>
-    <link rel="stylesheet" href="/src/about  stylel.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Personal Profile</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <span class="logo-red">Khmer</span><span class="logo-blue"> Load 24</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Politics</a></li>
-                    <li><a href="#">Business</a></li>
-                    <li><a href="#">Technology</a></li>
-                    <li><a href="#">Sports</a></li>
-                    <li><a href="#">World</a></li>
-                    <li><a href="#">Entertainment</a></li>
-                    <li><a href="#">Education</a></li>
-                </ul>
-            </nav>
-            <div class="header-right">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-moon"></i>
-                <button class="btn-login"><i class="fas fa-user"></i> Login</button>
-            </div>
-        </div>
+      <nav class="navbar">
+        <h2 class="logo">NY<span> ★ ★</span></h2>
+
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </header>
+    <div class="moving-text">
+      <div class="moving-content">
+        <span>WELCOME TO MY PERSONAL WEBSITE</span>
+        <span>★ COMPUTER SCIENCE STUDENT</span>
+        <span>★ WEB DEVELOPER</span>
+        <span>★ HTML | CSS | JAVA | C++</span>
+        <span>★ THANK YOU FOR VISITING MY PROFILE</span>
 
-    <main class="main-container">
-        
-        <div class="breaking-news">
-            <span class="breaking-label">BREAKING</span>
-            <div class="breaking-text">Prime Minister announces new economic policy to boost growth</div>
+        <span>★ WELCOME TO MY PERSONAL WEBSITE</span>
+        <span>★ COMPUTER SCIENCE STUDENT</span>
+        <span>★ WEB DEVELOPER</span>
+        <span>★ HTML | CSS | JAVA | C++</span>
+        <span>★ THANK YOU FOR VISITING MY PROFILE</span>
+      </div>
+    </div>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="welcome">WELCOME TO MY PROFILE</p>
+
+        <h1>Hello, I'm <span>KAO NY</span></h1>
+
+        <h2>Computer Science Student</h2>
+
+        <p class="description">
+          I am a passionate student who loves technology, programming and
+          creating modern websites. Welcome to my personal website!
+        </p>
+
+        <a href="#about" class="btn">About Me</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+
+      <div class="hero-image">
+        <img src="/src/My Profile/image/image1.png" alt="Profile Photo" />
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2 class="section-title">About <span>Me</span></h2>
+
+      <div class="about-content">
+        <div>
+          <h3>Who Am I?</h3>
+          <p>
+            My name is KAO NY. I am a Computer Science student interested in web
+            development, technology and computer programming. My goal is to
+            become a professional developer and create useful applications in
+            the future.
+          </p>
         </div>
 
-        <div class="top-grid">
-            
-            <section class="hero-section">
-                <div class="hero-image-placeholder">
-                    <div class="hero-overlay">
-                        <span class="tag-top-story">TOP STORY</span>
-                        <h1>Cambodia's Economy Shows Strong Growth in First Quarter of 2024</h1>
-                        <p>The Ministry of Economy and Finance announced that Cambodia's GDP grew by 6.2% in the first quarter...</p>
-                        <button class="btn-readmore">Read More <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-            </section>
+        <div class="info">
+          <p><strong>Name:</strong> KAO NY</p>
+          <p><strong>Major:</strong> Computer Science</p>
+          <p><strong>Country:</strong> Cambodia</p>
+          <p><strong>Language:</strong> Khmer, English</p>
+          <p><strong>Hobby:</strong> Coding, Learning, Technology</p>
+        </div>
+      </div>
+    </section>
+    <section id="skills" class="section skills-section">
+      <h2 class="section-title">My <span>Skills</span></h2>
 
-            <aside class="sidebar">
-                <div class="widget trending-widget">
-                    <h3><i class="fas fa-chart-line"></i> TRENDING</h3>
-                    ol>
-                        <li>Prime Minister announces new economic policy</li>
-                        <li>Cambodia and Japan strengthen bilateral ties</li>
-                        <li>New bridge across Mekong River near completion</li>
-                    </ol>
-                </div>
-
-                <div class="widget market-widget">
-                    <h3>MARKET SUMMARY</h3>
-                    <div class="market-item"><span>CSX Index</span> <span class="up">598.74 (+1.02%)</span></div>
-                    <div class="market-item"><span>USD / KHR</span> <span class="down">4,015 (-0.15%)</span></div>
-                    <div class="market-item"><span>Gold (1g)</span> <span class="up">318,000 (+0.47%)</span></div>
-                </div>
-            </aside>
+      <div class="skills-container">
+        <div class="skill-card">
+          <h3>HTML</h3>
+          <div class="progress">
+            <div style="width: 70%"></div>
+          </div>
+          <p>85%</p>
         </div>
 
-        <section class="latest-news-section">
-            <div class="section-title">
-                <h2>LATEST NEWS</h2>
-                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="card-grid">
-                <div class="news-card">
-                    <div class="card-img bg-politics"></div>
-                    <div class="card-content">
-                        <span class="card-tag tag-politics">POLITICS</span>
-                        <h3>National Assembly Approves New Law on Investment</h3>
-                        <span class="card-time">3 mins ago</span>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-img bg-business"></div>
-                    <div class="card-content">
-                        <span class="card-tag tag-business">BUSINESS</span>
-                        <h3>Foreign Direct Investment Increases by 15% in 2024</h3>
-                        <span class="card-time">15 mins ago</span>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-img bg-tech"></div>
-                    <div class="card-content">
-                        <span class="card-tag tag-tech">TECHNOLOGY</span>
-                        <h3>Cambodian Startup Develops AI Platform for Education</h3>
-                        <span class="card-time">28 mins ago</span>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-img bg-sports"></div>
-                    <div class="card-content">
-                        <span class="card-tag tag-sports">SPORTS</span>
-                        <h3>Cambodian Athlete Wins Gold at Asian Athletics Championships</h3>
-                        <span class="card-time">45 mins ago</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="skill-card">
+          <h3>CSS</h3>
+          <div class="progress">
+            <div style="width: 70%"></div>
+          </div>
+          <p>70%</p>
+        </div>
 
-    </main>
+        <div class="skill-card">
+          <h3>Java</h3>
+          <div class="progress">
+            <div style="width: 50%"></div>
+          </div>
+          <p>50%</p>
+        </div>
 
+        <div class="skill-card">
+          <h3>C++</h3>
+          <div class="progress">
+            <div style="width: 50%"></div>
+          </div>
+          <p>50%</p>
+        </div>
+      </div>
+    </section>
+    <section id="projects" class="section">
+      <h2 class="section-title">My <span>Projects</span></h2>
+
+      <div class="project-container">
+        <div class="project-card">
+          <h3>Personal Website</h3>
+          <p>A modern personal profile website using HTML and CSS.</p>
+        </div>
+
+        <div class="project-card">
+          <h3>Coffee Shop Website</h3>
+          <p>A beautiful coffee shop menu website design.</p>
+        </div>
+
+        <div class="project-card">
+          <h3>Java Application</h3>
+          <p>A simple Java programming project for learning.</p>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="section contact-section">
+      <h2 class="section-title">Contact <span>Me</span></h2>
+
+      <p>Feel free to contact me anytime!</p>
+
+      <div class="contact-info">
+        <p>Email: kaoni071@gmail.com</p>
+        <p>Phone: +855 97 849 2545</p>
+        <p>Location: Phnom Penh, Cambodia</p>
+      </div>
+    </section>
     <footer>
-        <div class="footer-container">
-            <div class="footer-info">
-                <div class="logo">
-                    <span class="logo-red">Khmer</span><span class="logo-white"> Load 24</span>
-                </div>
-                <p>Reliable, accurate, and timely news from Cambodia and around the world.</p>
-            </div>
-            <div class="footer-links">
-                <h4>EXPLORE</h4>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Politics</a></li>
-                    <li><a href="#">Business</a></li>
-                </ul>
-            </div>
-            <div class="footer-newsletter">
-                <h4>NEWSLETTER</h4>
-                <p>Subscribe to get the latest news.</p>
-                <div class="subscribe-box">
-                    <input type="email" placeholder="Enter your email">
-                    <button>Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 Khmer Load 24. All Rights Reserved.
-        </div>
+      <p>Copyright © 2026 KAO NY. All Rights Reserved.</p>
     </footer>
-
-</body>
+  </body>
 </html>
