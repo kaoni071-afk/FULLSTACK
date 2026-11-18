@@ -1,209 +1,233 @@
+const menuBtn = document.getElementById("menuBtn");
+const navbar = document.getElementById("navbar");
 
-const cityInput = document.getElementById("cityInput");
-const message = document.getElementById("message");
+menuBtn.addEventListener("click", () => {
+    navbar.classList.toggle("show");
 
-const weatherTypes = {
-    0: ["Clear Sky", "☀️"],
-    1: ["Mainly Clear", "🌤️"],
-    2: ["Partly Cloudy", "⛅"],
-    3: ["Overcast", "☁️"],
-    45: ["Foggy", "🌫️"],
-    48: ["Foggy", "🌫️"],
-    51: ["Light Drizzle", "🌦️"],
-    53: ["Drizzle", "🌦️"],
-    55: ["Heavy Drizzle", "🌧️"],
-    61: ["Light Rain", "🌧️"],
-    63: ["Rain", "🌧️"],
-    65: ["Heavy Rain", "⛈️"],
-    71: ["Light Snow", "🌨️"],
-    73: ["Snow", "❄️"],
-    75: ["Heavy Snow", "❄️"],
-    80: ["Rain Showers", "🌦️"],
-    81: ["Rain Showers", "🌧️"],
-    82: ["Heavy Showers", "⛈️"],
-    95: ["Thunderstorm", "⛈️"],
-    96: ["Thunderstorm", "⛈️"],
-    99: ["Heavy Thunderstorm", "⛈️"]
-};
+    const icon = menuBtn.querySelector("i");
 
-async function searchWeather() {
-    const city = cityInput.value.trim();
-
-    if (!city) {
-        message.textContent = "Please enter a city name!";
-        return;
-    }
-
-    try {
-        message.textContent = "Searching...";
-
-        const geoURL =
-            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
-
-        const geoResponse = await fetch(geoURL);
-        const geoData = await geoResponse.json();
-
-        if (!geoData.results || geoData.results.length === 0) {
-            throw new Error("City not found!");
-        }
-
-        const place = geoData.results[0];
-
-        await loadWeather(
-            place.latitude,
-            place.longitude,
-            place.name,
-            place.country || ""
-        );
-
-    } catch (error) {
-        message.textContent = error.message || "Something went wrong!";
-    }
-}
-
-async function loadWeather(lat, lon, city, country) {
-    try {
-        message.textContent = "Loading weather...";
-
-        const url =
-            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&forecast_days=7&timezone=auto`;
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error("Unable to get weather data.");
-        }
-
-        const data = await response.json();
-
-        const current = data.current;
-
-        const weather = weatherTypes[current.weather_code]
-            || ["Unknown", "🌡️"];
-
-        document.getElementById("cityName").textContent = city;
-        document.getElementById("country").textContent = country;
-
-        document.getElementById("date").textContent =
-            new Date(current.time).toLocaleString();
-
-        document.getElementById("temperature").textContent =
-            Math.round(current.temperature_2m) + "°C";
-
-        document.getElementById("weatherIcon").textContent =
-            current.is_day ? weather[1] :
-            (current.weather_code === 0 ? "🌙" : weather[1]);
-
-        document.getElementById("description").textContent = weather[0];
-
-        document.getElementById("humidity").textContent =
-            current.relative_humidity_2m + "%";
-
-        document.getElementById("wind").textContent =
-            current.wind_speed_10m + " km/h";
-
-        document.getElementById("feels").textContent =
-            Math.round(current.apparent_temperature) + "°C";
-
-        document.getElementById("uv").textContent =
-            data.daily.uv_index_max[0];
-
-        showForecast(data.daily);
-
-        message.textContent = "";
-
-    } catch (error) {
-        message.textContent = error.message;
-    }
-}
-
-function showForecast(daily) {
-    const forecast = document.getElementById("forecast");
-
-    forecast.innerHTML = "";
-
-    daily.time.forEach((date, index) => {
-        const weather = weatherTypes[daily.weather_code[index]]
-            || ["Unknown", "🌡️"];
-
-        const day = new Date(date + "T12:00:00")
-            .toLocaleDateString("en-US", {
-                weekday: "short"
-            });
-
-        const card = document.createElement("div");
-        card.className = "forecast-item";
-
-        const dayText = document.createElement("p");
-        dayText.textContent = day;
-
-        const icon = document.createElement("div");
-        icon.className = "icon";
-        icon.textContent = weather[1];
-
-        const description = document.createElement("p");
-        description.textContent = weather[0];
-
-        const temperature = document.createElement("p");
-        temperature.textContent =
-            `${Math.round(daily.temperature_2m_max[index])}° / ${Math.round(daily.temperature_2m_min[index])}°`;
-
-        card.append(dayText, icon, description, temperature);
-        forecast.appendChild(card);
-    });
-}
-
-function getLocation() {
-    if (!navigator.geolocation) {
-        message.textContent = "Location is not supported.";
-        return;
-    }
-
-    message.textContent = "Getting your location...";
-
-    navigator.geolocation.getCurrentPosition(
-        async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            try {
-                const url =
-                    `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=en&format=json`;
-
-                const response = await fetch(url);
-                const data = await response.json();
-
-                const place = data.results?.[0];
-
-                await loadWeather(
-                    lat,
-                    lon,
-                    place?.name || "My Location",
-                    place?.country || ""
-                );
-
-            } catch {
-                await loadWeather(lat, lon, "My Location", "");
-            }
-        },
-        () => {
-            message.textContent =
-                "Please allow location access.";
-        }
-    );
-}
-
-// Load Phnom Penh weather when website opens
-loadWeather(
-    11.5564,
-    104.9282,
-    "Phnom Penh",
-    "Cambodia"
-);
-
-// Search by pressing Enter
-cityInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        searchWeather();
+    if (navbar.classList.contains("show")) {
+        icon.className = "fas fa-xmark";
+    } else {
+        icon.className = "fas fa-bars";
     }
 });
+
+
+document.querySelectorAll(".navbar a").forEach(link => {
+    link.addEventListener("click", () => {
+        navbar.classList.remove("show");
+        menuBtn.querySelector("i").className = "fas fa-bars";
+    });
+});
+
+const themeBtn = document.getElementById("themeBtn");
+const themeIcon = themeBtn.querySelector("i");
+
+const savedTheme = localStorage.getItem("portfolio-theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    themeIcon.className = "fas fa-sun";
+}
+
+themeBtn.addEventListener("click", () => {
+
+    document.body.classList.toggle("light-mode");
+
+    const isLight =
+        document.body.classList.contains("light-mode");
+
+    themeIcon.className = isLight
+        ? "fas fa-sun"
+        : "fas fa-moon";
+
+    localStorage.setItem(
+        "portfolio-theme",
+        isLight ? "light" : "dark"
+    );
+
+});
+
+
+const words = [
+    "Computer Science Student",
+    "Web Developer",
+    "Java Programmer",
+    "Software Engineer",
+    "Future IT Professional"
+];
+
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+const typingElement =
+    document.querySelector(".typing");
+
+function typeEffect() {
+
+    const currentWord = words[wordIndex];
+
+    if (deleting) {
+        charIndex--;
+    } else {
+        charIndex++;
+    }
+
+    typingElement.textContent =
+        currentWord.substring(0, charIndex);
+
+    let speed = deleting ? 50 : 100;
+
+    if (!deleting &&
+        charIndex === currentWord.length) {
+
+        deleting = true;
+        speed = 1500;
+
+    } else if (deleting && charIndex === 0) {
+
+        deleting = false;
+
+        wordIndex =
+            (wordIndex + 1) % words.length;
+
+        speed = 400;
+    }
+
+    setTimeout(typeEffect, speed);
+}
+
+typeEffect();
+
+
+const sections =
+    document.querySelectorAll("section[id]");
+
+const navLinks =
+    document.querySelectorAll(".navbar a");
+
+window.addEventListener("scroll", () => {
+
+    let current = "home";
+
+    sections.forEach(section => {
+
+        const sectionTop =
+            section.offsetTop - 150;
+
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + current
+        );
+
+    });
+
+});
+
+const revealElements = document.querySelectorAll(
+    ".section-title, .about-container, .skill-card, " +
+    ".timeline-item, .project-card, .certificate-card, " +
+    ".learning-card, .contact-container"
+);
+
+revealElements.forEach(element => {
+    element.classList.add("reveal");
+});
+
+const observer = new IntersectionObserver(
+    (entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("visible");
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.12
+    }
+);
+
+revealElements.forEach(element => {
+    observer.observe(element);
+});
+
+
+const contactForm =
+    document.getElementById("contactForm");
+
+const formMessage =
+    document.getElementById("formMessage");
+
+contactForm.addEventListener("submit", (event) => {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const subject =
+        document.getElementById("subject").value.trim();
+
+    const message =
+        document.getElementById("message").value.trim();
+
+    // Change this to your real email
+    const myEmail = "kaoni071@email.com";
+
+    if (myEmail === "kaoni071@email.com") {
+        formMessage.textContent =
+            "Please configure the recipient email in script.js.";
+
+        return;
+    }
+
+    const mailBody =
+        `Name: ${name}\n` +
+        `Email: ${email}\n\n` +
+        `Message:\n${message}`;
+
+    const mailLink =
+        `mailto:${myEmail}` +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(mailBody)}`;
+
+    formMessage.textContent =
+        "Opening your email application...";
+
+    window.location.href = mailLink;
+
+});
+
+const footerYear = document.querySelector(".footer");
+
+if (footerYear) {
+    const yearText = footerYear.querySelector("p:last-child");
+
+    if (yearText) {
+        yearText.textContent =
+            `© ${new Date().getFullYear()} KAO NY. All Rights Reserved.`;
+    }
+}
+
+console.log("KAO NY Portfolio Website Loaded Successfully!");
