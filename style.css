@@ -226,13 +226,12 @@ span {
 }
 
 .home-image {
-  background-image: url("./images/background.png");
+  background-image: url("/Public/background.png");
   position: relative;
   width: 340px;
   flex-shrink: 0;
 }
-
-.image-circle {
+.home-image .image-circle {
   width: 320px;
   height: 350px;
   padding: 9px;
