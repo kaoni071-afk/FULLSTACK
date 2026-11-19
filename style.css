@@ -226,6 +226,7 @@ span {
 }
 
 .home-image {
+  background-image: url("./images/background.png");
   position: relative;
   width: 340px;
   flex-shrink: 0;
